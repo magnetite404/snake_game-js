@@ -5,7 +5,7 @@ let box = 32;
 let snake = [];
 snake[0] = {
     x: 8 * box,
-    y: 8 * box
+    y: 8 * box 
 }
 
 let direction;
@@ -36,10 +36,10 @@ function drawFood() {
 document.addEventListener('keydown', update);
 
 function update (event) {
-    if(event.keyCode == 37 && direction != "right") direction = "left";
-    if(event.keyCode == 38 && direction != "down") direction = "up";
-    if(event.keyCode == 39 && direction != "left") direction = "right";
-    if(event.keyCode == 40 && direction != "up") direction = "down";
+    if((event.keyCode == 37 || event.keyCode == 65) && direction != "right") direction = "left";
+    if((event.keyCode == 38 || event.keyCode == 87) && direction != "down") direction = "up";
+    if((event.keyCode == 39 || event.keyCode == 68) && direction != "left") direction = "right";
+    if((event.keyCode == 40 || event.keyCode == 83) && direction != "up") direction = "down";
 }
 
 function iniciarJogo(){
@@ -60,7 +60,12 @@ function iniciarJogo(){
     if(direction == "up") snakeY -= box;
     if(direction == "down") snakeY += box;
 
-    snake.pop();
+    if(snakeX != food.x || snakeY != food.y) {
+        snake.pop();
+    } else {
+        food.x = Math.floor(Math.random() * 15 + 1) * box,
+        food.y = Math.floor(Math.random() * 15 + 1) * box
+    }
 
     let newHead = {
         x: snakeX,
